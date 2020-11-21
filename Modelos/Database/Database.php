@@ -22,10 +22,12 @@ class Database
 	//Camel Case  - Letras en camello
 
 	// Crear
-	public  function prepararConsultaCreate($nombreTabla, $campos, $valores) {
-		$conexion = $this->conectar();
-		$query = $conexion->prepare("INSERT INTO " . $nombreTabla . " ($campos) VALUES ($valores);");
-		return $query;
+	public  function prepararConsultaCreate($nombreTabla, $camposYValores) {
+		$query =  "INSERT INTO " . $nombreTabla;
+		$columnas = "(" . implode(", ", array_keys($camposYValores)) . ")";
+		$valores = " VALUES(" . implode(", ", array_values($camposYValores)) . ")";
+		$query .= $columnas . $valores;
+	 	return $query;
 	}
 
 	// Read - Leer - Traer la lista de registros

@@ -7,11 +7,14 @@ include_once "Database/Database.php";
  */
 class Persona
 {
-	
+	//Attributos
 	private $identificacion;
 	private $nombres;
 	private $apellidos;
+	private $email;
 	private $celular;
+
+	// Info Database
 	private $conexion;
 	const   NOMBRE_TABLA = 'usuario';
 
@@ -24,39 +27,14 @@ class Persona
 
 
 	// Getters - Sirven para que el objeto acceda algunas propiedades que necesita
-	public function getIdentificacion() {
-		return $this->identificacion;
-	}
 
-	public function getNombres() {
-		return $this->nombres;
+	public function get($attr) {
+		return $this->$attr;
 	}
-
-	public function getApellidos() {
-		return $this->apellidos;
-	}
-
-	public function getCelular() {
-		return $this->celular;
-	}
-
 
 	// Setters
-
-	public function setIdentificacion($ident) {
-		$this->identificacion = $ident;
-	}
-
-	public function setNombres($nomb) {
-		$this->nombres = $nomb;
-	}
-
-	public function setApellidos($apell) {
-		$this->apellidos = $apell;
-	}
-
-	public function setCelular($cel) {
-		$this->celular = $cel;
+	public function set($attr, $value) {
+		$this->$attr = $value;
 	}
 
 	// CRUD
@@ -65,17 +43,24 @@ class Persona
 	//C: Create - Crear
 	public function create() {
 		$conexion = $this->conexion->conectar();
-		$query =  $this->conexion->prepararConsultaCreate(self::NOMBRE_TABLA, "numero_identificacion, nombres, apellidos, celular", "?,?,?,?");
-		$query->bind_param('ssss', $this->identificacion, $this->nombres, $this->apellidos, $this->celular);
+		$camposYValores = [
+				"numero_identificacion" => "'" . $this->identificacion .  "'" ,
+				"nombres" =>  "'" . $this->nombres . "'",
+				"apellidos" =>  "'" . $this->apellidos . "'",
+				"celular" =>  "'" . $this->celular . "'",
+				"email" => "'" . $this->email . "'"
+		];
 
-		$resultado = [];
-		if($query->execute()) {
+		$query = $this->conexion->prepararConsultaCreate(self::NOMBRE_TABLA, $camposYValores);
+		if (mysqli_query($conexion, $query)) {
 			$resultado['msj'] = "Usuario Creado Exitosamente";
 			$resultado['clase'] = "exito";
+ 
+		} else {
+			 $resultado['msj'] = mysqli_error($conexion);
+	   		 $resultado['clase'] = "error";
 		}
-	
-		$resultado['msj'] = $query->error;
-	    $resultado['clase'] = "error";
+		
 		return $resultado;
 	}
 

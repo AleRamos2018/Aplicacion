@@ -18,7 +18,7 @@ $personas = $persona->read();
 				<label>Identificación</label>
 			</td>
 			<td>
-				<input type="text" name="numero_identificacion">
+				<input maxlength="10" type="text" name="numero_identificacion" required="">
 			</td>
 		</tr>
 		<tr>
@@ -26,7 +26,7 @@ $personas = $persona->read();
 				<label>Nombres</label> 
 			</td>
 			<td>
-				<input type="text" name="nombres">
+				<input type="text" name="nombres" required="">
 			</td>
 		</tr>
 		<tr>
@@ -34,7 +34,14 @@ $personas = $persona->read();
 				<label>Apellidos</label>
 			</td>
 			<td>
-				<input type="text" name="apellidos">
+				<input type="text" name="apellidos" required="">
+			</td>
+		</tr>
+			<td>
+				<label>E-mail</label>
+			</td>
+			<td>
+				<input type="email" name="email" required="">
 			</td>
 		</tr>
 		<tr>
@@ -42,7 +49,7 @@ $personas = $persona->read();
 				<label>Celular</label>
 			</td>
 			<td>
-				<input type="text" name="celular">
+				<input type="number" maxlength="10" name="celular" required="">
 			</td>
 		</tr>
 		<tr>
@@ -63,6 +70,7 @@ $personas = $persona->read();
 					<th>Identificación</th>
 					<th>Nombres</th>
 					<th>Apellidos</th>
+					<th>E-mail</th>
 					<th>Celular</th>
 				</tr>
 			</thead>
@@ -74,7 +82,9 @@ $personas = $persona->read();
 					echo "<td>" . $persona['numero_identificacion'] . "</td>";
 					echo "<td>" . $persona['nombres'] ."</td>";
 					echo "<td>" . $persona['apellidos'] ."</td>"; 
+					echo "<td>" . $persona['email'] . "</td>";
 					echo "<td>" . $persona['celular'] . "</td>";
+					
 				echo "</tr>"; 
 			}
 

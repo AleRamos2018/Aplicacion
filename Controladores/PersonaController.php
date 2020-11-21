@@ -10,10 +10,11 @@ class PersonaController
 
 	function obtenerDatos() {
 		$persona = new Persona();
-		$persona->setIdentificacion($_POST['numero_identificacion']);
-		$persona->setNombres($_POST['nombres']);
-		$persona->setApellidos($_POST['apellidos']);
-		$persona->setCelular($_POST['celular']);
+		$persona->set('identificacion', $_POST['numero_identificacion']);
+		$persona->set('nombres', $_POST['nombres']);
+		$persona->set('apellidos', $_POST['apellidos']);
+		$persona->set('email', $_POST['email']);
+		$persona->set('celular', $_POST['celular']);
 		$resultado = $persona->create();
 
 		if($resultado) {
